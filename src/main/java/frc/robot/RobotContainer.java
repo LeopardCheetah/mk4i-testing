@@ -28,8 +28,6 @@ public class RobotContainer {
   public RobotContainer() {
     // Configure the trigger bindings
     configureBindings();
-    (new PrintCommand("Beginning Logging...")).schedule();
-    m_moduleLogger.schedule();
   }
 
   /**
@@ -55,6 +53,6 @@ public class RobotContainer {
    */
   public Command getAutonomousCommand() {
     // An example command will be run in autonomous
-    return null;
+    return m_moduleLogger;
   }
 }

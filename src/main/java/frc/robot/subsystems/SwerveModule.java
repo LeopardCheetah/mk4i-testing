@@ -40,6 +40,7 @@ public class SwerveModule extends SubsystemBase {
     m_drivingEncoder = m_drivingMotor.getEncoder();
 
     m_drivingEncoder.setVelocityConversionFactor(Config.RPMToMetersPerSecond);
+    m_drivingEncoder.setPositionConversionFactor(Config.rotationsToMeters);
     m_absoluteEncoder.setDistancePerRotation(Config.radiansPerRotation);
   }
 
