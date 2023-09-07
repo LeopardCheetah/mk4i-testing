@@ -5,8 +5,10 @@
 package frc.robot;
 
 import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.PrintCommand;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
+import frc.robot.commands.LogSwerveState;
 import frc.robot.subsystems.SwerveModule;
 
 /**
@@ -21,9 +23,13 @@ public class RobotContainer {
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   SwerveModule m_module = new SwerveModule(3, 10, 9);
 
+  LogSwerveState m_moduleLogger = new LogSwerveState("TestModule", m_module);
+
   public RobotContainer() {
     // Configure the trigger bindings
     configureBindings();
+    (new PrintCommand("Beginning Logging...")).schedule();
+    m_moduleLogger.schedule();
   }
 
   /**
