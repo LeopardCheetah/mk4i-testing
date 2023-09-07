@@ -12,15 +12,16 @@ import com.revrobotics.RelativeEncoder;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.kinematics.SwerveModulePosition;
 import edu.wpi.first.math.kinematics.SwerveModuleState;
+import edu.wpi.first.math.util.Units;
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.DutyCycleEncoder;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 public class SwerveModule extends SubsystemBase {
   private class Config {
-    public static final double RPMToMetersPerSecond = 1.0; // TODO: calculate for driving motor
-    public static final double distancePerRotation = 1.0; // TODO: calculate distance per rotation
-    public static final double rotationsToMeters = 1.0; // TODO: calculate rotations to meters
+    public static final double rotationsToMeters = 0.0254 * ((4 * Math.PI) / (6.75)); 
+    public static final double RPMToMetersPerSecond = rotationsToMeters; 
+    public static final double radiansPerRotation = Math.PI * 2; 
   }
 
   private TalonFX m_turningMotor;
@@ -39,7 +40,7 @@ public class SwerveModule extends SubsystemBase {
     m_drivingEncoder = m_drivingMotor.getEncoder();
 
     m_drivingEncoder.setVelocityConversionFactor(Config.RPMToMetersPerSecond);
-    m_absoluteEncoder.setDistancePerRotation(Config.distancePerRotation);
+    m_absoluteEncoder.setDistancePerRotation(Config.radiansPerRotation);
   }
 
   public SwerveModuleState getState() {
