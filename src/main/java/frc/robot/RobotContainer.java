@@ -4,11 +4,15 @@
 
 package frc.robot;
 
+import java.sql.Driver;
+
+import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj2.command.Command;
-import edu.wpi.first.wpilibj2.command.PrintCommand;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
+import frc.robot.commands.DriveSwerve;
 import frc.robot.commands.LogSwerveState;
+import frc.robot.subsystems.Drivetrain;
 import frc.robot.subsystems.SwerveModule;
 
 /**
@@ -18,16 +22,15 @@ import frc.robot.subsystems.SwerveModule;
  * subsystems, commands, and trigger mappings) should be declared here.
  */
 public class RobotContainer {
-  // The robot's subsystems and commands are defined here...
-  // Replace with CommandPS4Controller or CommandJoystick if needed
-  /** The container for the robot. Contains subsystems, OI devices, and commands. */
-  SwerveModule m_module = new SwerveModule(3, 10, 9);
+  private Joystick m_joystick = new Joystick(0);
 
-  LogSwerveState m_moduleLogger = new LogSwerveState("TestModule", m_module);
+  private Drivetrain m_drivetrain = new Drivetrain();
+  private DriveSwerve m_swerve = new DriveSwerve(m_drivetrain, m_joystick);
 
   public RobotContainer() {
     // Configure the trigger bindings
     configureBindings();
+    m_drivetrain.setDefaultCommand(m_swerve);
   }
 
   /**
@@ -53,6 +56,6 @@ public class RobotContainer {
    */
   public Command getAutonomousCommand() {
     // An example command will be run in autonomous
-    return m_moduleLogger;
+    return null;
   }
 }
