@@ -34,29 +34,30 @@ public final class Constants {
       new Translation2d(-kWheelBase / 2.0, -kWheelBase / 2.0)
     );
     // TODO: gather all of these constants.
-    public static int kFrontLeftDriveId;
-    public static int kFrontLeftTurnId;
-    public static int kFrontLeftAbsoluteEncoderPort;
+    public static int kFrontLeftDriveId = 7;
+    public static int kFrontLeftTurnId = 2;
+    public static int kFrontLeftAbsoluteEncoderPort = 7;
     public static double kFrontLeftAbsoluteEncoderOffset;
     public static boolean kFrontLeftDriveReversed;
 
-    public static int kFrontRightDriveId;
-    public static int kFrontRightTurnId;
-    public static int kFrontRightAbsoluteEncoderPort;
+    public static int kFrontRightDriveId = 8;
+    public static int kFrontRightTurnId = 1;
+    public static int kFrontRightAbsoluteEncoderPort = 6;
     public static double kFrontRightAbsoluteEncoderOffset;
     public static boolean kFrontRightDriveReversed;
 
-    public static int kBackLeftDriveId;
-    public static int kBackLeftTurnId;
-    public static int kBackLeftAbsoluteEncoderPort;
+    public static int kBackLeftDriveId = 10;
+    public static int kBackLeftTurnId = 3;
+    public static int kBackLeftAbsoluteEncoderPort = 9;
     public static double kBackLeftAbsoluteEncoderOffset;
     public static boolean kBackLeftDriveReversed;
 
-    public static int kBackRightDriveId;
-    public static int kBackRightTurnId;
-    public static int kBackRightAbsoluteEncoderPort;
+    public static int kBackRightDriveId = 9;
+    public static int kBackRightTurnId = 4;
+    public static int kBackRightAbsoluteEncoderPort = 8;
     public static double kBackRightAbsoluteEncoderOffset;
     public static boolean kBackRightDriveReversed;
+
     public static double kDeadband;
     public static double kTeleopMaxAccelMetersPerSecondSquared;
     public static double kTeleopMaxAngularAccelRadiansPerSecondSquared;
