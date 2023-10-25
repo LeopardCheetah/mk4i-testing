@@ -5,9 +5,11 @@
 package frc.robot.subsystems;
 
 import com.ctre.phoenix.motorcontrol.ControlMode;
+import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.can.TalonFX;
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.RelativeEncoder;
+import com.revrobotics.CANSparkMax.IdleMode;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 
 import edu.wpi.first.math.controller.PIDController;
@@ -52,6 +54,10 @@ public class SwerveModule extends SubsystemBase {
         DriveConstants.kDTurning);
     m_turningPIDController.enableContinuousInput(-Math.PI, Math.PI);
     m_moduleId = moduleId;
+
+    m_turnMotor.setNeutralMode(NeutralMode.Brake);
+    m_driveMotor.setIdleMode(IdleMode.kBrake);
+    m_driveMotor.setInverted(driveReversed);
   }
 
   public double getDrivePosition() {
@@ -59,7 +65,7 @@ public class SwerveModule extends SubsystemBase {
   }
 
   public double getTurningPosition() {
-    return m_absoluteEncoder.get() + m_absoluteEncoderOffset;
+    return m_absoluteEncoder.getDistance() - m_absoluteEncoderOffset;
   }
 
   public Rotation2d getRotation() {
@@ -79,16 +85,22 @@ public class SwerveModule extends SubsystemBase {
   }
 
   public void setDesiredState(SwerveModuleState state) {
+    if (m_moduleId != 3) {
+      stop();
+      return;
+    }
     if (Math.abs(state.speedMetersPerSecond) < DriveConstants.kTranslationalDeadbandMetersPerSecond) {
       stop();
       return;
     }
 
-    state = SwerveModuleState.optimize(state, getState().angle);
+    // state = SwerveModuleState.optimize(state, getState().angle);
+    SmartDashboard.putNumber("Swerve/Commanded/Speed_" + m_moduleId, state.speedMetersPerSecond);
+    SmartDashboard.putNumber("Swerve/Commanded/Angle_" + m_moduleId, state.angle.getRadians());
 
     m_driveMotor.set(state.speedMetersPerSecond / DriveConstants.kMaxTranslationalMetersPerSecond);
     m_turnMotor.set(ControlMode.PercentOutput,
-        m_turningPIDController.calculate(getTurningPosition(), state.angle.getRadians()));
+        m_turningPIDController.calculate(getRotation().getRadians(), state.angle.getRadians()));
 
     SmartDashboard.putString("Swerve_" + m_moduleId + "_state", state.toString());
   }
@@ -96,5 +108,11 @@ public class SwerveModule extends SubsystemBase {
   public void stop() {
     m_driveMotor.set(0.0);
     m_turnMotor.set(ControlMode.PercentOutput, 0.0);
+  }
+
+  @Override
+  public void periodic() {
+    SmartDashboard.putNumber("Swerve/Angle/Module_" + m_moduleId, getRotation().getRadians());
+    SmartDashboard.putNumber("Swerve/Speed/Module_" + m_moduleId, getDriveVelocity());
   }
 }

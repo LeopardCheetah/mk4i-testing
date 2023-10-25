@@ -23,7 +23,7 @@ public final class Constants {
     public static final double kTurnEncoderPositionToRadians = 2.0 * Math.PI;
     public static final double kTranslationalDeadbandMetersPerSecond = 0.001;
     public static final double kMaxTranslationalMetersPerSecond = 14.5;
-    public static final double kPTurning = 0.5;
+    public static final double kPTurning = 0.05;
     public static final double kITurning = 0.0;
     public static final double kDTurning = 0.0;
     public static final double kWheelBase = Units.inchesToMeters(18.75);
@@ -37,35 +37,35 @@ public final class Constants {
     public static int kFrontLeftDriveId = 7;
     public static int kFrontLeftTurnId = 2;
     public static int kFrontLeftAbsoluteEncoderPort = 7;
-    public static double kFrontLeftAbsoluteEncoderOffset;
-    public static boolean kFrontLeftDriveReversed;
+    public static double kFrontLeftAbsoluteEncoderOffset = -2.000703539422531 ;
+    public static boolean kFrontLeftDriveReversed = false;
 
     public static int kFrontRightDriveId = 8;
     public static int kFrontRightTurnId = 1;
     public static int kFrontRightAbsoluteEncoderPort = 6;
-    public static double kFrontRightAbsoluteEncoderOffset;
-    public static boolean kFrontRightDriveReversed;
+    public static double kFrontRightAbsoluteEncoderOffset = 3.012447823937954;
+    public static boolean kFrontRightDriveReversed = true;
 
     public static int kBackLeftDriveId = 10;
     public static int kBackLeftTurnId = 3;
     public static int kBackLeftAbsoluteEncoderPort = 9;
-    public static double kBackLeftAbsoluteEncoderOffset;
-    public static boolean kBackLeftDriveReversed;
+    public static double kBackLeftAbsoluteEncoderOffset = 2.821914151725208;
+    public static boolean kBackLeftDriveReversed = false;
 
     public static int kBackRightDriveId = 9;
     public static int kBackRightTurnId = 4;
     public static int kBackRightAbsoluteEncoderPort = 8;
-    public static double kBackRightAbsoluteEncoderOffset;
-    public static boolean kBackRightDriveReversed;
+    public static double kBackRightAbsoluteEncoderOffset = 4.275249192969147;
+    public static boolean kBackRightDriveReversed = true;
 
-    public static double kDeadband;
-    public static double kTeleopMaxAccelMetersPerSecondSquared;
-    public static double kTeleopMaxAngularAccelRadiansPerSecondSquared;
-    public static double kTeleopMaxSpeedMetersPerSecond;
+    public static double kDeadband = 0.05;
+    public static double kTeleopMaxAccelMetersPerSecondSquared = 3;
+    public static double kTeleopMaxAngularAccelRadiansPerSecondSquared = 4;
+    public static double kTeleopMaxSpeedMetersPerSecond = kMaxTranslationalMetersPerSecond / 4.0;
     public static int kTeleopMaxTurningRadiansPerSecond;
-    public static int kDriveJoystickId;
-    public static int kJoystickXAxis;
-    public static int kJoystickYxis;
-    public static int kJoystickRotAxis;
+    public static int kDriveJoystickId = 0;
+    public static int kJoystickXAxis = 1;
+    public static int kJoystickYxis = 0;
+    public static int kJoystickRotAxis = 4;
   }
 }
