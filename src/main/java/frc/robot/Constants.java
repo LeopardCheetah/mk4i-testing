@@ -23,7 +23,7 @@ public final class Constants {
     public static final double kTurnEncoderPositionToRadians = 2.0 * Math.PI;
     public static final double kTranslationalDeadbandMetersPerSecond = 0.001;
     public static final double kMaxTranslationalMetersPerSecond = 14.5;
-    public static final double kPTurning = 0.05;
+    public static final double kPTurning = 0.5;
     public static final double kITurning = 0.0;
     public static final double kDTurning = 0.0;
     public static final double kWheelBase = Units.inchesToMeters(18.75);
@@ -35,13 +35,13 @@ public final class Constants {
     );
     // TODO: gather all of these constants.
     public static int kFrontLeftDriveId = 7;
-    public static int kFrontLeftTurnId = 2;
+    public static int kFrontLeftTurnId = 1;
     public static int kFrontLeftAbsoluteEncoderPort = 7;
     public static double kFrontLeftAbsoluteEncoderOffset = -2.000703539422531 ;
     public static boolean kFrontLeftDriveReversed = false;
 
     public static int kFrontRightDriveId = 8;
-    public static int kFrontRightTurnId = 1;
+    public static int kFrontRightTurnId = 2;
     public static int kFrontRightAbsoluteEncoderPort = 6;
     public static double kFrontRightAbsoluteEncoderOffset = 3.012447823937954;
     public static boolean kFrontRightDriveReversed = true;
@@ -62,10 +62,14 @@ public final class Constants {
     public static double kTeleopMaxAccelMetersPerSecondSquared = 3;
     public static double kTeleopMaxAngularAccelRadiansPerSecondSquared = 4;
     public static double kTeleopMaxSpeedMetersPerSecond = kMaxTranslationalMetersPerSecond / 4.0;
-    public static int kTeleopMaxTurningRadiansPerSecond;
+    public static double kTeleopMaxTurningRadiansPerSecond = 4.0 * Math.PI;
     public static int kDriveJoystickId = 0;
     public static int kJoystickXAxis = 1;
     public static int kJoystickYxis = 0;
     public static int kJoystickRotAxis = 4;
+    public static boolean kFrontLeftTurningReversed = true;
+    public static boolean kFrontRightTurningReversed = true;
+    public static boolean kBackLeftTurningReversed = true;
+    public static boolean kBackRightTurningReversed = true;;
   }
 }

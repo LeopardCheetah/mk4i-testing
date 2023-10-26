@@ -35,7 +35,7 @@ public class SwerveModule extends SubsystemBase {
 
   /** Creates a new SwerveModule. */
   public SwerveModule(int driveId, int turnId, int absoluteEncoderPort, double absoluteEncoderOffset,
-      boolean driveReversed, int moduleId) {
+      boolean driveReversed, boolean turningReversed, int moduleId) {
     // Initialize motors and encoders.
     m_driveMotor = new CANSparkMax(driveId, MotorType.kBrushless);
     m_turnMotor = new TalonFX(turnId);
@@ -58,6 +58,7 @@ public class SwerveModule extends SubsystemBase {
     m_turnMotor.setNeutralMode(NeutralMode.Brake);
     m_driveMotor.setIdleMode(IdleMode.kBrake);
     m_driveMotor.setInverted(driveReversed);
+    m_turnMotor.setInverted(turningReversed);
   }
 
   public double getDrivePosition() {
@@ -85,16 +86,12 @@ public class SwerveModule extends SubsystemBase {
   }
 
   public void setDesiredState(SwerveModuleState state) {
-    if (m_moduleId != 3) {
-      stop();
-      return;
-    }
     if (Math.abs(state.speedMetersPerSecond) < DriveConstants.kTranslationalDeadbandMetersPerSecond) {
       stop();
       return;
     }
 
-    // state = SwerveModuleState.optimize(state, getState().angle);
+    state = SwerveModuleState.optimize(state, getState().angle);
     SmartDashboard.putNumber("Swerve/Commanded/Speed_" + m_moduleId, state.speedMetersPerSecond);
     SmartDashboard.putNumber("Swerve/Commanded/Angle_" + m_moduleId, state.angle.getRadians());
 

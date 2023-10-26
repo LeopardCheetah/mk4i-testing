@@ -4,6 +4,9 @@
 
 package frc.robot.subsystems;
 
+import com.kauailabs.navx.frc.AHRS;
+
+import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.kinematics.SwerveDriveKinematics;
 import edu.wpi.first.math.kinematics.SwerveModuleState;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
@@ -15,7 +18,8 @@ public class SwerveDrive extends SubsystemBase {
     DriveConstants.kFrontLeftTurnId,
     DriveConstants.kFrontLeftAbsoluteEncoderPort, 
     DriveConstants.kFrontLeftAbsoluteEncoderOffset, 
-    DriveConstants.kFrontLeftDriveReversed, 
+    DriveConstants.kFrontLeftDriveReversed,
+    DriveConstants.kFrontLeftTurningReversed, 
     0
   );
 
@@ -25,6 +29,7 @@ public class SwerveDrive extends SubsystemBase {
     DriveConstants.kFrontRightAbsoluteEncoderPort, 
     DriveConstants.kFrontRightAbsoluteEncoderOffset, 
     DriveConstants.kFrontRightDriveReversed, 
+    DriveConstants.kFrontRightTurningReversed, 
     1
   );
 
@@ -34,6 +39,7 @@ public class SwerveDrive extends SubsystemBase {
     DriveConstants.kBackLeftAbsoluteEncoderPort, 
     DriveConstants.kBackLeftAbsoluteEncoderOffset, 
     DriveConstants.kBackLeftDriveReversed, 
+    DriveConstants.kBackLeftTurningReversed, 
     2
   );
 
@@ -43,8 +49,15 @@ public class SwerveDrive extends SubsystemBase {
     DriveConstants.kBackRightAbsoluteEncoderPort, 
     DriveConstants.kBackRightAbsoluteEncoderOffset, 
     DriveConstants.kBackRightDriveReversed, 
+    DriveConstants.kBackRightTurningReversed, 
     3
   );
+
+  private final AHRS m_imu = new AHRS();
+
+  public void resetHeading() {
+    m_imu.reset();
+  }
 
   public void setModuleStates(SwerveModuleState[] states) {
     SwerveDriveKinematics.desaturateWheelSpeeds(states, DriveConstants.kMaxTranslationalMetersPerSecond);
@@ -55,6 +68,9 @@ public class SwerveDrive extends SubsystemBase {
     m_backRight.setDesiredState(states[3]);
   }
 
+  public Rotation2d getAngle() {
+    return Rotation2d.fromDegrees(Math.IEEEremainder(m_imu.getAngle(), 360));
+  }
   public void stop() {
     m_frontLeft.stop();
     m_frontRight.stop();

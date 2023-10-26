@@ -5,7 +5,9 @@
 package frc.robot;
 
 import edu.wpi.first.wpilibj.Joystick;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
 import frc.robot.Constants.DriveConstants;
@@ -26,14 +28,16 @@ public class RobotContainer {
 
   private final JoystickDrive m_drive = new JoystickDrive(m_swerve, 
     () -> -m_driverJoystick.getRawAxis(DriveConstants.kJoystickXAxis),
-    () -> m_driverJoystick.getRawAxis(DriveConstants.kJoystickYxis),
-    () -> m_driverJoystick.getRawAxis(DriveConstants.kJoystickRotAxis)
+    () -> -m_driverJoystick.getRawAxis(DriveConstants.kJoystickYxis),
+    () -> -m_driverJoystick.getRawAxis(DriveConstants.kJoystickRotAxis)
   );
 
   public RobotContainer() {
     m_swerve.setDefaultCommand(m_drive);
     // Configure the trigger bindings
     configureBindings();
+
+    SmartDashboard.putData("Swerve/Reset_Heading", new InstantCommand(() -> m_swerve.resetHeading()));
   }
 
   /**

@@ -9,6 +9,7 @@ import java.util.function.Supplier;
 import edu.wpi.first.math.filter.SlewRateLimiter;
 import edu.wpi.first.math.kinematics.ChassisSpeeds;
 import edu.wpi.first.math.kinematics.SwerveModuleState;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.Constants.DriveConstants;
 import frc.robot.subsystems.SwerveDrive;
@@ -55,15 +56,18 @@ public class JoystickDrive extends CommandBase {
     xSpeed = m_xLimiter.calculate(xSpeed) * DriveConstants.kTeleopMaxSpeedMetersPerSecond;
     ySpeed = m_yLimiter.calculate(ySpeed) * DriveConstants.kTeleopMaxSpeedMetersPerSecond;
     turningSpeed = m_turningLimiter.calculate(turningSpeed) * DriveConstants.kTeleopMaxTurningRadiansPerSecond;
+    SmartDashboard.putNumber("Swerve/turningSpeedCommanded", turningSpeed);
 
     // Construct chassis speed objects.
-    ChassisSpeeds chassisSpeeds = new ChassisSpeeds(xSpeed, ySpeed, turningSpeed);
+    ChassisSpeeds chassisSpeeds = ChassisSpeeds.fromFieldRelativeSpeeds(xSpeed, ySpeed, turningSpeed, m_swerve.getAngle());
 
     // Calculate module states.
     SwerveModuleState[] moduleStates = DriveConstants.kDriveKinematics.toSwerveModuleStates(chassisSpeeds);
 
     // Set module states.
     m_swerve.setModuleStates(moduleStates);
+
+    SmartDashboard.putNumber("Swerve/heading", m_swerve.getAngle().getDegrees());
   }
 
   // Called once the command ends or is interrupted.
