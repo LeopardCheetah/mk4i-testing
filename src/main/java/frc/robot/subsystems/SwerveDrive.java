@@ -9,6 +9,8 @@ import com.pathplanner.lib.commands.FollowPathHolonomic;
 import com.pathplanner.lib.controllers.PPHolonomicDriveController;
 import com.pathplanner.lib.path.PathPlannerTrajectory;
 
+import edu.wpi.first.math.controller.PIDController;
+import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.kinematics.SwerveDriveKinematics;
 import edu.wpi.first.math.kinematics.SwerveModuleState;
@@ -16,6 +18,8 @@ import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import edu.wpi.first.wpilibj2.command.WaitCommand;
+import frc.robot.Constants;
 import frc.robot.Constants.DriveConstants;
 
 public class SwerveDrive extends SubsystemBase {
@@ -77,24 +81,33 @@ public class SwerveDrive extends SubsystemBase {
   public Rotation2d getAngle() {
     return Rotation2d.fromDegrees(Math.IEEEremainder(m_imu.getAngle(), 360));
   }
+
   public void stop() {
     m_frontLeft.stop();
     m_frontRight.stop();
     m_backLeft.stop();
     m_backRight.stop();
   }
+
+  private void resetOdometry(Pose2d initialPose) {
+    return;
+  }
+
   public Command followTrajectoryCommand(PathPlannerTrajectory traj, boolean isFirstPath) {
+    return new WaitCommand(0.0);
+    // NOTE: please dont merge code with errors; we need to keep a clean branch for testing.
+    /*
     return new SequentialCommandGroup(
          new InstantCommand(() -> {
            // Reset odometry for the first path you run during auto
            if(isFirstPath){
-               this.resetOdometry(traj.getInitialHolonomicPose());
+              resetOdometry(traj.getInitialTargetHolonomicPose());
            }
          }),
          new FollowPathHolonomic(
              traj, 
              this::getPose, // Pose supplier
-             this.kinematics, // SwerveDriveKinematics
+             DriveConstants.kDriveKinematics, // SwerveDriveKinematics
              new PIDController(0, 0, 0), // X controller. Tune these values for your robot. Leaving them 0 will only use feedforwards.
              new PIDController(0, 0, 0), // Y controller (usually the same values as X controller)
              new PIDController(0, 0, 0), // Rotation controller. Tune these values for your robot. Leaving them 0 will only use feedforwards.
@@ -103,4 +116,6 @@ public class SwerveDrive extends SubsystemBase {
              this // Requires this drive subsystem
          )
      );
+  */
+  }
 }

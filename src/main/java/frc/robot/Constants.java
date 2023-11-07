@@ -26,6 +26,9 @@ public final class Constants {
     public static final double kPTurning = 0.5;
     public static final double kITurning = 0.0;
     public static final double kDTurning = 0.0;
+    public static final double kPDriving = 0.0;
+    public static final double kIDriving = 0.0;
+    public static final double kDDriving = 0.0;
     public static final double kWheelBase = Units.inchesToMeters(18.75);
     public static final SwerveDriveKinematics kDriveKinematics = new SwerveDriveKinematics(
       new Translation2d(kWheelBase / 2.0, kWheelBase / 2.0),

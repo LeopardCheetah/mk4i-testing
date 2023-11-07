@@ -18,7 +18,7 @@ public class AutoDriveForward extends CommandBase {
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    m_swerve.getAutonomousCommand("Drive Forward");
+    // m_swerve.getAutonomousCommand("Drive Forward");
   }
 
   // Called every time the scheduler runs while the command is scheduled.

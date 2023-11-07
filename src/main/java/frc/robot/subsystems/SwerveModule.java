@@ -30,6 +30,7 @@ public class SwerveModule extends SubsystemBase {
 
   private final double m_absoluteEncoderOffset;
   private final PIDController m_turningPIDController;
+  private final PIDController m_drivePIDController;
 
   private final int m_moduleId;
 
@@ -54,6 +55,8 @@ public class SwerveModule extends SubsystemBase {
         DriveConstants.kDTurning);
     m_turningPIDController.enableContinuousInput(-Math.PI, Math.PI);
     m_moduleId = moduleId;
+    m_drivePIDController = new PIDController(DriveConstants.kPDriving, DriveConstants.kIDriving, 
+        DriveConstants.kDDriving);
 
     m_turnMotor.setNeutralMode(NeutralMode.Brake);
     m_driveMotor.setIdleMode(IdleMode.kBrake);
@@ -95,7 +98,10 @@ public class SwerveModule extends SubsystemBase {
     SmartDashboard.putNumber("Swerve/Commanded/Speed_" + m_moduleId, state.speedMetersPerSecond);
     SmartDashboard.putNumber("Swerve/Commanded/Angle_" + m_moduleId, state.angle.getRadians());
 
-    m_driveMotor.set(state.speedMetersPerSecond / DriveConstants.kMaxTranslationalMetersPerSecond);
+    double driveCorrection = m_drivePIDController.calculate(getDriveVelocity(), state.speedMetersPerSecond);
+    
+    m_driveMotor.set((state.speedMetersPerSecond / DriveConstants.kMaxTranslationalMetersPerSecond) 
+        + driveCorrection);
     m_turnMotor.set(ControlMode.PercentOutput,
         m_turningPIDController.calculate(getRotation().getRadians(), state.angle.getRadians()));
 
